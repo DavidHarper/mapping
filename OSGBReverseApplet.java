@@ -55,7 +55,7 @@ public class OSGBReverseApplet extends Applet {
     	return "OSGBReverseApplet\n\n" +
     	    "Demonstration applet for the TransverseMercatorProjection\n" + 
     	    "and OSGB classes\n\n" +
-    	    "Copyright \u00a9 2002 David Harper at Obliquity Consulting\n" +
+    	    "Copyright \u00a9 2004 David Harper at Obliquity Consulting\n" +
     	    "www.obliquity.com";
         }
 }
