@@ -26,8 +26,6 @@
 
 package com.obliquity.mapping;
 
-import java.lang.*;
-
 public class Ellipsoid {
     private double semiMajorAxis, flattening;
 

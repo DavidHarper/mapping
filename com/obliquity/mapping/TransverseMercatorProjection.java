@@ -26,8 +26,6 @@
 
 package com.obliquity.mapping;
 
-import java.lang.*;
-
 /**
  * <code>TransverseMercatorProjection</code> encapsulates a generic
  * Transverse Mercator Projection. It includes public member functions

@@ -26,8 +26,6 @@
 
 package com.obliquity.mapping;
 
-import java.lang.*;
-
 /**
  * This class encapsulates a two-dimensional point. The point has an
  * X coordinate and a Y coordinate. Member functions are provided

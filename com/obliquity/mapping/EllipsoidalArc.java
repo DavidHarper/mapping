@@ -26,8 +26,6 @@
 
 package com.obliquity.mapping;
 
-import java.lang.*;
-
 public class EllipsoidalArc {
     private Ellipsoid ellipsoid;
     private double longitudeA, latitudeA, longitudeB, latitudeB;
