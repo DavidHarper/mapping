@@ -24,8 +24,6 @@
  * the archive of this library for complete text of license.
  */
 
-import java.io.*;
-import java.lang.Math;
 import java.text.*;
 
 import java.awt.*;
@@ -48,42 +46,6 @@ public class OSNI2OSGB extends Applet {
 	    "OSNI and OSGB classes\n\n" +
 	    "Copyright \u00a9 2002 David Harper at Obliquity Consulting\n" +
 	    "www.obliquity.com";
-    }
-}
-
-class ThreeDPanel extends Panel {
-    public void paint(Graphics g) {
-	Dimension sz = getSize();
-	g.setColor(Color.lightGray);
-	g.draw3DRect(0, 0, sz.width-1, sz.height-1, true);
-    }
-}
-
-class Separator extends Component {
-    int thickness= 2;
-
-    public void paint(Graphics g) {
-	Dimension size = getSize();
-
-	g.setColor(SystemColor.controlShadow);
-	int y = (size.height/2) - (thickness/2);
-	while(y < (size.height/2)) {
-	    g.drawLine(0, y, size.width, y);
-	    ++y;
-	}
-        g.setColor(SystemColor.controlLtHighlight);
-	y = size.height/2;
-	while(y < ((size.height/2) + (thickness/2))) {
-	    g.drawLine(0, y, size.width, y);
-	    ++y;
-	}	
-    }
-
-    public Dimension getPreferredSize() {
-	Dimension prefsz = getSize();
-	
-	prefsz.height = thickness;
-	return prefsz;
     }
 }
 
