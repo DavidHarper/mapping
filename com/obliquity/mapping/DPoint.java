@@ -84,9 +84,9 @@ public class DPoint extends java.lang.Object{
      * @return A new <CODE>DPoint</CODE> which represents the vector
      * from the other point to this point.
      */
-  public DPoint offsetFrom(DPoint origin) {
-    return new DPoint(myX - origin.getX(),
-		      myY - origin.getY());
+  public DPoint offsetFrom(DPoint p) {
+    return new DPoint(myX - p.getX(),
+		      myY - p.getY());
   }
 
     /**
@@ -96,9 +96,9 @@ public class DPoint extends java.lang.Object{
      *
      * @return The scalar distance between this point and the other.
      */
-  public double distanceFrom(DPoint origin) {
-    double dx = myX - origin.getX(),
-      dy = myY - origin.getY();
+  public double distanceFrom(DPoint p) {
+    double dx = myX - p.getX(),
+      dy = myY - p.getY();
 
     return Math.sqrt(dx * dx + dy * dy);
   }
@@ -121,8 +121,8 @@ public class DPoint extends java.lang.Object{
      * @param v The translation vector. <em>The coordinates are changed by
      * this function.</em>
      */
-  public void offsetBy(DPoint dr) {
-    myX += dr.getX();
-    myY += dr.getY();
+  public void offsetBy(DPoint v) {
+    myX += v.getX();
+    myY += v.getY();
   }
 }

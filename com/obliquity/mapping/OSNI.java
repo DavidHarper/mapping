@@ -106,10 +106,10 @@ public class OSNI extends TransverseMercatorProjection {
      * <em>metres</em> of the origin of the specified 100km square
      * with respect to the origin of the Irish Grid.
      */
-  public DPoint GridSquareToOffset(char b) {
+  public DPoint GridSquareToOffset(char a) {
     char B;
 
-    B = Character.toUpperCase(b);
+    B = Character.toUpperCase(a);
 
     double E = 0.0;
     double N = 0.0;
