@@ -175,7 +175,7 @@ public class OSGBReverseForm extends Panel implements ActionListener {
         gbc.insets    = new Insets(5,0,2,0);
         add(sep, gbc);
 
-	Label obliquitylabel = new Label("Copyright \u00a9 2002 by Obliquity.com");
+	Label obliquitylabel = new Label("Copyright \u00a9 2004 by Obliquity.com");
 
 	obliquitylabel.setFont(new Font("SansSerif", Font.ITALIC, 12));
 	obliquitylabel.setForeground(Color.blue);
