@@ -26,69 +26,64 @@
 
 package test;
 
-import java.io.*;
 import java.lang.Math;
 import com.obliquity.mapping.*;
 
 public class TestMercator {
-  static public void main(String args[]) {
-    double E0 = 400000.0, N0 = -100000.0, F0 = 0.9996012717;
-    double a = 6377563.396, b = 6356256.910;
-    double phi0 = Math.PI * 49.0/180.0, lambda0 = Math.PI * (-2.0)/180.0;
-    double x, y;
+	static public void main(String args[]) {
+		double x, y;
 
-    OSGB osgb = new OSGB();
+		OSGB osgb = new OSGB();
 
-    if (args.length < 2) {
-      /*
-	Caister Water Tower
-      */
-      x = 651409.903;
-      y = 313177.271;
-    } else {
-      Double d;
-      d = new Double(args[0]);
-      x = d.doubleValue();
-      d = new Double(args[1]);
-      y = d.doubleValue();
-    }
+		if (args.length < 2) {
+			/*
+			 * Caister Water Tower
+			 */
+			x = 651409.903;
+			y = 313177.271;
+		} else {
+			Double d;
+			d = new Double(args[0]);
+			x = d.doubleValue();
+			d = new Double(args[1]);
+			y = d.doubleValue();
+		}
 
-    DPoint p = osgb.GridToLongitudeAndLatitude(x, y);
+		DPoint p = osgb.GridToLongitudeAndLatitude(x, y);
 
-    double phi, lambda;
+		double phi, lambda;
 
-    lambda = (180.0/Math.PI) * p.getX();
-    phi = (180.0/Math.PI) * p.getY();
+		lambda = (180.0 / Math.PI) * p.getX();
+		phi = (180.0 / Math.PI) * p.getY();
 
-    System.out.println("Grid coordinates (" + x + ", " + y +
-		       ") map to longitude " + lambda + ", latitude " +
-		       phi);
+		System.out.println("Grid coordinates (" + x + ", " + y
+				+ ") map to longitude " + lambda + ", latitude " + phi);
 
-    double ls = Math.abs(lambda);
-    double ps = Math.abs(phi);
+		double ls = Math.abs(lambda);
+		double ps = Math.abs(phi);
 
-    int ld,lm,pd,pm;
+		int ld, lm, pd, pm;
 
-    ld = (int)ls;
-    ls = 60.0 * (ls - ld);
-    lm = (int)ls;
-    ls = 60.0 * (ls - lm);
+		ld = (int) ls;
+		ls = 60.0 * (ls - ld);
+		lm = (int) ls;
+		ls = 60.0 * (ls - lm);
 
-    pd = (int)ps;
-    ps = 60.0 * (ps - pd);
-    pm = (int)ps;
-    ps = 60.0 * (ps - pm);
+		pd = (int) ps;
+		ps = 60.0 * (ps - pd);
+		pm = (int) ps;
+		ps = 60.0 * (ps - pm);
 
-    System.out.print((lambda < 0.0)?"West ": "East ");
-    System.out.println(ld + " " + lm + " " + ls);
+		System.out.print((lambda < 0.0) ? "West " : "East ");
+		System.out.println(ld + " " + lm + " " + ls);
 
-    System.out.print((phi < 0.0)?"South ":"North ");
-    System.out.println(pd + " " + pm + " " + ps);
+		System.out.print((phi < 0.0) ? "South " : "North ");
+		System.out.println(pd + " " + pm + " " + ps);
 
-    p = osgb.LatitudeAndLongitudeToGrid(p);
+		p = osgb.LatitudeAndLongitudeToGrid(p);
 
-    System.out.println("Reverse transform:");
-    System.out.println("  Easting  = " + p.getX());
-    System.out.println("  Northing = " + p.getY());
-  }
+		System.out.println("Reverse transform:");
+		System.out.println("  Easting  = " + p.getX());
+		System.out.println("  Northing = " + p.getY());
+	}
 }

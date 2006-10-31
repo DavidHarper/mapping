@@ -1,4 +1,4 @@
- /*
+/*
  * Map projections package
  *
  * Vincenty algorithms for distance on an ellipsoid
@@ -27,18 +27,18 @@
 package com.obliquity.mapping;
 
 public class Ellipsoid {
-    private double semiMajorAxis, flattening;
+	private double semiMajorAxis, flattening;
 
-    public Ellipsoid(double a, double f) {
-	semiMajorAxis = a;
-	flattening = f;
-    }
+	public Ellipsoid(double a, double f) {
+		semiMajorAxis = a;
+		flattening = f;
+	}
 
-    public double getSemiMajorAxis() {
-	return semiMajorAxis;
-    }
+	public double getSemiMajorAxis() {
+		return semiMajorAxis;
+	}
 
-    public double getFlattening() {
-	return flattening;
-    }
+	public double getFlattening() {
+		return flattening;
+	}
 }

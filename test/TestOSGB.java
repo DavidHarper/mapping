@@ -26,90 +26,89 @@
 
 package test;
 
-import java.io.*;
 import java.lang.Math;
 import com.obliquity.mapping.*;
 
 public class TestOSGB {
-  static public void main(String args[]) {
-    double x, y;
-    String prefix = null;
+	static public void main(String args[]) {
+		double x, y;
+		String prefix = null;
 
-    OSGB osgb = new OSGB();
+		OSGB osgb = new OSGB();
 
-    if (args.length < 2) {
-      /*
-	Caister Water Tower
-      */
-      x = 651409.903;
-      y = 313177.271;
-    } else {
-      if (args.length == 2) {
-	Double d;
-	d = new Double(args[0]);
-	x = d.doubleValue();
-	d = new Double(args[1]);
-	y = d.doubleValue();
-      } else {
-	Double d;
-	prefix = args[0];
-	d = new Double(args[1]);
-	x = d.doubleValue();
-	d = new Double(args[2]);
-	y = d.doubleValue();
-      }
-    }
+		if (args.length < 2) {
+			/*
+			 * Caister Water Tower
+			 */
+			x = 651409.903;
+			y = 313177.271;
+		} else {
+			if (args.length == 2) {
+				Double d;
+				d = new Double(args[0]);
+				x = d.doubleValue();
+				d = new Double(args[1]);
+				y = d.doubleValue();
+			} else {
+				Double d;
+				prefix = args[0];
+				d = new Double(args[1]);
+				x = d.doubleValue();
+				d = new Double(args[2]);
+				y = d.doubleValue();
+			}
+		}
 
-    DPoint p0 = new DPoint(x, y);
+		DPoint p0 = new DPoint(x, y);
 
-    if (prefix != null && prefix.length() == 2) {
-      DPoint dp = osgb.GridSquareToOffset(prefix.charAt(0),
-					  prefix.charAt(1));
-      System.out.println("Applying offset [" + dp.getX() + ", " +
-			 dp.getY() + "]");
-      p0.offsetBy(dp);
-    }
+		if (prefix != null && prefix.length() == 2) {
+			DPoint dp = osgb.GridSquareToOffset(prefix.charAt(0), prefix
+					.charAt(1));
+			System.out.println("Applying offset [" + dp.getX() + ", "
+					+ dp.getY() + "]");
+			p0.offsetBy(dp);
+		}
 
-    char [] pfx = osgb.GridToGridSquare(p0);
-    String pfxs = new String(pfx);
+		char[] pfx = osgb.GridToGridSquare(p0);
+		String pfxs = new String(pfx);
 
-    DPoint p = osgb.GridToLongitudeAndLatitude(p0);
+		DPoint p = osgb.GridToLongitudeAndLatitude(p0);
 
-    double phi, lambda;
+		double phi, lambda;
 
-    lambda = (180.0/Math.PI) * p.getX();
-    phi = (180.0/Math.PI) * p.getY();
+		lambda = (180.0 / Math.PI) * p.getX();
+		phi = (180.0 / Math.PI) * p.getY();
 
-    System.out.println("Grid coordinates (" + p0.getX() + ", " + p0.getY() +
-		       ") map to:");
+		System.out.println("Grid coordinates (" + p0.getX() + ", " + p0.getY()
+				+ ") map to:");
 
-    double ls = Math.abs(lambda);
-    double ps = Math.abs(phi);
+		double ls = Math.abs(lambda);
+		double ps = Math.abs(phi);
 
-    int ld,lm,pd,pm;
+		int ld, lm, pd, pm;
 
-    ld = (int)ls;
-    ls = 60.0 * (ls - ld);
-    lm = (int)ls;
-    ls = 60.0 * (ls - lm);
+		ld = (int) ls;
+		ls = 60.0 * (ls - ld);
+		lm = (int) ls;
+		ls = 60.0 * (ls - lm);
 
-    pd = (int)ps;
-    ps = 60.0 * (ps - pd);
-    pm = (int)ps;
-    ps = 60.0 * (ps - pm);
+		pd = (int) ps;
+		ps = 60.0 * (ps - pd);
+		pm = (int) ps;
+		ps = 60.0 * (ps - pm);
 
-    System.out.print((lambda < 0.0)?"West ": "East ");
-    System.out.println(ld + "\u00b0 " + lm + "\' " + ls + "\"");
+		System.out.print((lambda < 0.0) ? "West " : "East ");
+		System.out.println(ld + "\u00b0 " + lm + "\' " + ls + "\"");
 
-    System.out.print((phi < 0.0)?"South ":"North ");
-    System.out.println(pd + "\u00b0 " + pm + "\' " + ps + "\"");
+		System.out.print((phi < 0.0) ? "South " : "North ");
+		System.out.println(pd + "\u00b0 " + pm + "\' " + ps + "\"");
 
-    System.out.println("Grid letters are " + pfxs);
+		System.out.println("Grid letters are " + pfxs);
 
-    p = osgb.LatitudeAndLongitudeToGrid(p);
+		p = osgb.LatitudeAndLongitudeToGrid(p);
 
-    System.out.println("Reverse transform:");
-    System.out.println("  Easting  = " + p.getX());
-    System.out.println("  Northing = " + p.getY());
-  }
+		System.out.println("Reverse transform:");
+		System.out.println("  Easting  = " + p.getX());
+		System.out.println("  Northing = " + p.getY());
+	}
 }

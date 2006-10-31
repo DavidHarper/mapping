@@ -33,207 +33,205 @@ import java.awt.event.*;
 import com.obliquity.mapping.*;
 
 public class OSGBForm extends Panel implements ActionListener {
-    OSGB osgb;
-    Separator sep;
-    TextField eastings, northings;
-    List prefix;
-    Label longitude, latitude, gridinput;
-    Button calculate;
-    NumberFormat myFormat = NumberFormat.getInstance();
-   
-    public OSGBForm() {
-	osgb = new OSGB();
+	OSGB osgb;
+	Separator sep;
+	TextField eastings, northings;
+	List prefix;
+	Label longitude, latitude, gridinput;
+	Button calculate;
+	NumberFormat myFormat = NumberFormat.getInstance();
 
-	myFormat.setMaximumFractionDigits(2);
-	myFormat.setMinimumFractionDigits(2);
+	public OSGBForm() {
+		osgb = new OSGB();
 
-	GridBagLayout gbl = new GridBagLayout();
-	GridBagConstraints gbc = new GridBagConstraints();
+		myFormat.setMaximumFractionDigits(2);
+		myFormat.setMinimumFractionDigits(2);
 
-	setLayout(gbl);
+		GridBagLayout gbl = new GridBagLayout();
+		GridBagConstraints gbc = new GridBagConstraints();
 
-	Label label = new Label("OSGB to Latitude/Longitude");
+		setLayout(gbl);
 
-	label.setFont(new Font("SansSerif", Font.BOLD + Font.ITALIC, 18));
-	label.setForeground(Color.blue);
+		Label label = new Label("OSGB to Latitude/Longitude");
 
-	gbc.anchor = GridBagConstraints.NORTH;
-	gbc.gridwidth = GridBagConstraints.REMAINDER;
-	add(label, gbc);
+		label.setFont(new Font("SansSerif", Font.BOLD + Font.ITALIC, 18));
+		label.setForeground(Color.blue);
 
-	sep = new Separator();
-	gbc.fill      = GridBagConstraints.HORIZONTAL;
-        gbc.insets    = new Insets(5,0,5,0);
-        add(sep, gbc);
+		gbc.anchor = GridBagConstraints.NORTH;
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		add(label, gbc);
 
-	label = new Label("Eastings (metres):");
-        gbc.gridwidth = 1;
-        gbc.insets = new Insets(0,0,0,0);
-        add(label, gbc);
+		sep = new Separator();
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.insets = new Insets(5, 0, 5, 0);
+		add(sep, gbc);
 
-	eastings = new TextField(10);
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        add(eastings, gbc);
+		label = new Label("Eastings (metres):");
+		gbc.gridwidth = 1;
+		gbc.insets = new Insets(0, 0, 0, 0);
+		add(label, gbc);
 
-	label = new Label("Northings (metres):");
-	gbc.gridwidth = 1;
-        gbc.insets = new Insets(0,0,0,0);
-        add(label, gbc);
+		eastings = new TextField(10);
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		add(eastings, gbc);
 
-	northings = new TextField(10);
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        add(northings, gbc);
+		label = new Label("Northings (metres):");
+		gbc.gridwidth = 1;
+		gbc.insets = new Insets(0, 0, 0, 0);
+		add(label, gbc);
 
-	label = new Label("Grid prefix:");
-	gbc.gridwidth = 1;
-        gbc.insets = new Insets(0,0,0,0);
-        add(label, gbc);
+		northings = new TextField(10);
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		add(northings, gbc);
 
-	prefix = new List(5);
-	populatePrefixes(prefix);
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        add(prefix, gbc);
+		label = new Label("Grid prefix:");
+		gbc.gridwidth = 1;
+		gbc.insets = new Insets(0, 0, 0, 0);
+		add(label, gbc);
 
-	sep = new Separator();
-	gbc.fill      = GridBagConstraints.HORIZONTAL;
-        gbc.insets    = new Insets(5,0,5,0);
-        add(sep, gbc);
+		prefix = new List(5);
+		populatePrefixes(prefix);
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		add(prefix, gbc);
 
-	Panel buttonpanel = new Panel();
-	buttonpanel.setLayout(new BorderLayout());
-	calculate = new Button("Convert");
-	buttonpanel.add(calculate, BorderLayout.CENTER);
+		sep = new Separator();
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.insets = new Insets(5, 0, 5, 0);
+		add(sep, gbc);
 
-	calculate.addActionListener(this);
+		Panel buttonpanel = new Panel();
+		buttonpanel.setLayout(new BorderLayout());
+		calculate = new Button("Convert");
+		buttonpanel.add(calculate, BorderLayout.CENTER);
 
-	gbc.insets = new Insets(0,0,0,0);
-	add(buttonpanel, gbc);
+		calculate.addActionListener(this);
 
-	sep = new Separator();
-	gbc.fill      = GridBagConstraints.HORIZONTAL;
-        gbc.insets    = new Insets(5,0,5,0);
-        add(sep, gbc);
+		gbc.insets = new Insets(0, 0, 0, 0);
+		add(buttonpanel, gbc);
 
-	gridinput = new Label();
-	gridinput.setForeground(Color.red);
-        gbc.insets = new Insets(0,0,5,0);
-	add(gridinput, gbc);
+		sep = new Separator();
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.insets = new Insets(5, 0, 5, 0);
+		add(sep, gbc);
 
-	label = new Label("Latitude:");
-	label.setForeground(Color.blue);
-        gbc.insets = new Insets(0,0,0,0);
-	gbc.gridwidth = 1;
-        add(label, gbc);
+		gridinput = new Label();
+		gridinput.setForeground(Color.red);
+		gbc.insets = new Insets(0, 0, 5, 0);
+		add(gridinput, gbc);
 
-	longitude = new Label();
-	longitude.setForeground(Color.blue);
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        add(longitude, gbc);
+		label = new Label("Latitude:");
+		label.setForeground(Color.blue);
+		gbc.insets = new Insets(0, 0, 0, 0);
+		gbc.gridwidth = 1;
+		add(label, gbc);
 
-	label = new Label("Longitude:");
-	label.setForeground(Color.blue);
-	gbc.gridwidth = 1;
-        gbc.insets = new Insets(0,0,0,0);
-        add(label, gbc);
+		longitude = new Label();
+		longitude.setForeground(Color.blue);
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		add(longitude, gbc);
 
-	latitude = new Label();
-	latitude.setForeground(Color.blue);
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        add(latitude, gbc);
+		label = new Label("Longitude:");
+		label.setForeground(Color.blue);
+		gbc.gridwidth = 1;
+		gbc.insets = new Insets(0, 0, 0, 0);
+		add(label, gbc);
 
-	sep = new Separator();
-	gbc.fill      = GridBagConstraints.HORIZONTAL;
-        gbc.insets    = new Insets(5,0,2,0);
-        add(sep, gbc);
+		latitude = new Label();
+		latitude.setForeground(Color.blue);
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		add(latitude, gbc);
 
-	Label obliquitylabel = new Label("Copyright \u00a9 2002 by Obliquity.com");
+		sep = new Separator();
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.insets = new Insets(5, 0, 2, 0);
+		add(sep, gbc);
 
-	obliquitylabel.setFont(new Font("SansSerif", Font.ITALIC, 12));
-	obliquitylabel.setForeground(Color.blue);
+		Label obliquitylabel = new Label(
+				"Copyright \u00a9 2002 by Obliquity.com");
 
-	gbc.anchor = GridBagConstraints.NORTH;
-	gbc.gridwidth = GridBagConstraints.REMAINDER;
-	add(obliquitylabel, gbc);
-    }
+		obliquitylabel.setFont(new Font("SansSerif", Font.ITALIC, 12));
+		obliquitylabel.setForeground(Color.blue);
 
-    private void populatePrefixes(List list) {
-	String [] prefixes = {
-	    "HP", "HT", "HU", "HY", "HZ", "NA", "NB", "NC", "ND", "NF",
-	    "NG", "NH", "NJ", "NK", "NL", "NM", "NN", "NO", "NR", "NS",
-	    "NT", "NU", "NV", "NW", "NX", "NY", "NZ", "SA", "SB", "SC",
-	    "SD", "SE", "SH", "SJ", "SK", "SM", "SN", "SO", "SP", "SR",
-	    "SS", "ST", "SU", "SV", "SW", "SX", "SY", "SZ", "TA", "TF",
-	    "TG", "TL", "TM", "TQ", "TR", "TV" };
-
-	for (int j = 0; j < prefixes.length; j++)
-	    list.add(prefixes[j]);
-
-	list.select(0);
-    }
-
-    public void actionPerformed(ActionEvent ae) {
-	double x = 0.0, y = 0.0;
-	Double d;
-
-	try {
-	    d = new Double(eastings.getText());
-	    x = d.doubleValue();
-	}
-	catch (NumberFormatException nfe) {
-	    eastings.setText("0");
-	    x = 0.0;
+		gbc.anchor = GridBagConstraints.NORTH;
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		add(obliquitylabel, gbc);
 	}
 
-	try {
-	    d = new Double(northings.getText());
-	    y = d.doubleValue();
+	private void populatePrefixes(List list) {
+		String[] prefixes = { "HP", "HT", "HU", "HY", "HZ", "NA", "NB", "NC",
+				"ND", "NF", "NG", "NH", "NJ", "NK", "NL", "NM", "NN", "NO",
+				"NR", "NS", "NT", "NU", "NV", "NW", "NX", "NY", "NZ", "SA",
+				"SB", "SC", "SD", "SE", "SH", "SJ", "SK", "SM", "SN", "SO",
+				"SP", "SR", "SS", "ST", "SU", "SV", "SW", "SX", "SY", "SZ",
+				"TA", "TF", "TG", "TL", "TM", "TQ", "TR", "TV" };
+
+		for (int j = 0; j < prefixes.length; j++)
+			list.add(prefixes[j]);
+
+		list.select(0);
 	}
-	catch (NumberFormatException nfe) {
-	    northings.setText("0");
-	    y = 0.0;
+
+	public void actionPerformed(ActionEvent ae) {
+		double x = 0.0, y = 0.0;
+		Double d;
+
+		try {
+			d = new Double(eastings.getText());
+			x = d.doubleValue();
+		} catch (NumberFormatException nfe) {
+			eastings.setText("0");
+			x = 0.0;
+		}
+
+		try {
+			d = new Double(northings.getText());
+			y = d.doubleValue();
+		} catch (NumberFormatException nfe) {
+			northings.setText("0");
+			y = 0.0;
+		}
+
+		DPoint p0 = new DPoint(x, y);
+
+		String pfxs = prefix.getSelectedItem();
+
+		DPoint dp = osgb.GridSquareToOffset(pfxs.charAt(0), pfxs.charAt(1));
+		dp.offsetBy(p0);
+
+		DPoint p = osgb.GridToLongitudeAndLatitude(dp);
+
+		double phi, lambda;
+
+		lambda = (180.0 / Math.PI) * p.getX();
+		phi = (180.0 / Math.PI) * p.getY();
+
+		double ls = Math.abs(lambda);
+		double ps = Math.abs(phi);
+
+		int ld, lm, pd, pm;
+
+		ld = (int) ls;
+		ls = 60.0 * (ls - ld);
+		lm = (int) ls;
+		ls = 60.0 * (ls - lm);
+
+		pd = (int) ps;
+		ps = 60.0 * (ps - pd);
+		pm = (int) ps;
+		ps = 60.0 * (ps - pm);
+
+		String str = ld + "\u00b0 " + lm + "\' " + myFormat.format(ls) + "\""
+				+ ((lambda < 0.0) ? " West" : " East");
+
+		latitude.setText(str);
+
+		str = pd + "\u00b0 " + pm + "\' " + myFormat.format(ps) + "\""
+				+ ((phi < 0.0) ? " South" : " North");
+
+		longitude.setText(str);
+
+		str = pfxs + " " + myFormat.format(p0.getX()) + " "
+				+ myFormat.format(p0.getY());
+		gridinput.setText(str);
 	}
-
-	DPoint p0 = new DPoint(x, y);
-
-	String pfxs = prefix.getSelectedItem();
-
-	DPoint dp = osgb.GridSquareToOffset(pfxs.charAt(0),
-					    pfxs.charAt(1));
-	dp.offsetBy(p0);
-
-	DPoint p = osgb.GridToLongitudeAndLatitude(dp);
-
-	double phi, lambda;
-
-	lambda = (180.0/Math.PI) * p.getX();
-	phi = (180.0/Math.PI) * p.getY();
-
-	double ls = Math.abs(lambda);
-	double ps = Math.abs(phi);
-
-	int ld,lm,pd,pm;
-
-	ld = (int)ls;
-	ls = 60.0 * (ls - ld);
-	lm = (int)ls;
-	ls = 60.0 * (ls - lm);
-
-	pd = (int)ps;
-	ps = 60.0 * (ps - pd);
-	pm = (int)ps;
-	ps = 60.0 * (ps - pm);
-
-	String str = ld + "\u00b0 " + lm + "\' " + myFormat.format(ls) + "\"" + 
-	    ((lambda < 0.0)?" West": " East");
-
-	latitude.setText(str);
-
-	str = pd + "\u00b0 " + pm + "\' " + myFormat.format(ps) + "\"" + 
-	    ((phi < 0.0)?" South":" North");
-    
-	longitude.setText(str);
-
-	str = pfxs + " " + myFormat.format(p0.getX()) + " " + myFormat.format(p0.getY());
-	gridinput.setText(str);
-    }
 }

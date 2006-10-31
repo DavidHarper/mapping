@@ -27,102 +27,107 @@
 package com.obliquity.mapping;
 
 /**
- * This class encapsulates a two-dimensional point. The point has an
- * X coordinate and a Y coordinate. Member functions are provided
- * to perform simple operations on a point or points.
- *
+ * This class encapsulates a two-dimensional point. The point has an X
+ * coordinate and a Y coordinate. Member functions are provided to perform
+ * simple operations on a point or points.
+ * 
  * <p>
  * All numerical values are stored and manipulated as <CODE>double</CODE>
  * numbers.
- *
+ * 
  * @author David Harper at obliquity.com
  * @version 1.1 2001-10-03
  */
 
-public class DPoint extends java.lang.Object{
-  private double myX, myY;
+public class DPoint extends java.lang.Object {
+	private double myX, myY;
 
-    /**
-     * Create a point with the spcfieid X and Y coordinates.
-     */
-  public DPoint(double x, double y) {
-    myX = x;
-    myY = y;
-  }
+	/**
+	 * Create a point with the spcfieid X and Y coordinates.
+	 */
+	public DPoint(double x, double y) {
+		myX = x;
+		myY = y;
+	}
 
-    /**
-     * Create a default point, which is the origin (0.0, 0.0).
-     */
-  public DPoint() {
-    myX = 0.0;
-    myY = 0.0;
-  }
+	/**
+	 * Create a default point, which is the origin (0.0, 0.0).
+	 */
+	public DPoint() {
+		myX = 0.0;
+		myY = 0.0;
+	}
 
-    /**
-     * Get the X coordinate of the point.
-     */
-  public double getX() { return myX; }
+	/**
+	 * Get the X coordinate of the point.
+	 */
+	public double getX() {
+		return myX;
+	}
 
-    /**
-     * get the Y coordinate of the point.
-     */
-  public double getY() { return myY; }
+	/**
+	 * get the Y coordinate of the point.
+	 */
+	public double getY() {
+		return myY;
+	}
 
-    /**
-     * Format the point as a string.
-     */
-  public String toString() {
-    return "DPoint[" + myX + ", " + myY + "]";
-  }
+	/**
+	 * Format the point as a string.
+	 */
+	public String toString() {
+		return "DPoint[" + myX + ", " + myY + "]";
+	}
 
-    /**
-     * Calculate the position of this point relative to an another
-     * point.
-     *
-     * @param p The other point.
-     *
-     * @return A new <CODE>DPoint</CODE> which represents the vector
-     * from the other point to this point.
-     */
-  public DPoint offsetFrom(DPoint p) {
-    return new DPoint(myX - p.getX(),
-		      myY - p.getY());
-  }
+	/**
+	 * Calculate the position of this point relative to an another point.
+	 * 
+	 * @param p
+	 *            The other point.
+	 * 
+	 * @return A new <CODE>DPoint</CODE> which represents the vector from the
+	 *         other point to this point.
+	 */
+	public DPoint offsetFrom(DPoint p) {
+		return new DPoint(myX - p.getX(), myY - p.getY());
+	}
 
-    /**
-     * Calculate the scalar distance from this point to another point.
-     *
-     * @param p The other point.
-     *
-     * @return The scalar distance between this point and the other.
-     */
-  public double distanceFrom(DPoint p) {
-    double dx = myX - p.getX(),
-      dy = myY - p.getY();
+	/**
+	 * Calculate the scalar distance from this point to another point.
+	 * 
+	 * @param p
+	 *            The other point.
+	 * 
+	 * @return The scalar distance between this point and the other.
+	 */
+	public double distanceFrom(DPoint p) {
+		double dx = myX - p.getX(), dy = myY - p.getY();
 
-    return Math.sqrt(dx * dx + dy * dy);
-  }
+		return Math.sqrt(dx * dx + dy * dy);
+	}
 
-    /**
-     * Scale this point by an amount in both the X and Y coordinates.
-     *
-     * @param r The scale factor. Both coordinates of this point are
-     * multiplied by this factor. <em>The coordinates are changed by
-     * this function.</em>
-     */
-  public void scaleBy(double r) {
-    myX *= r;
-    myY *= r;
-  }
+	/**
+	 * Scale this point by an amount in both the X and Y coordinates.
+	 * 
+	 * @param r
+	 *            The scale factor. Both coordinates of this point are
+	 *            multiplied by this factor. <em>The coordinates are changed by
+	 * this function.</em>
+	 */
+	public void scaleBy(double r) {
+		myX *= r;
+		myY *= r;
+	}
 
-    /**
-     * Translate this point by a specified vector.
-     *
-     * @param v The translation vector. <em>The coordinates are changed by
-     * this function.</em>
-     */
-  public void offsetBy(DPoint v) {
-    myX += v.getX();
-    myY += v.getY();
-  }
+	/**
+	 * Translate this point by a specified vector.
+	 * 
+	 * @param v
+	 *            The translation vector. <em>The coordinates are changed by
+	 * this function.</em>
+	 */
+	public void offsetBy(DPoint v) {
+		myX += v.getX();
+		myY += v.getY();
+	}
 }

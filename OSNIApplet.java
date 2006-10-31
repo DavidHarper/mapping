@@ -27,17 +27,17 @@
 import java.applet.Applet;
 
 public class OSNIApplet extends Applet {
-    public void init() {
-	ThreeDPanel p = new ThreeDPanel();
-	p.add(new OSNIForm());
-	add(p);
-    }
+	public void init() {
+		ThreeDPanel p = new ThreeDPanel();
+		p.add(new OSNIForm());
+		add(p);
+	}
 
-    public String getAppletInfo() {
-	return "OSNIApplet\n\n" +
-	    "Demonstration applet for the TransverseMercatorProjection\n" + 
-	    "and OSNI classes\n\n" +
-	    "Copyright \u00a9 2002 David Harper at Obliquity Consulting\n" +
-	    "www.obliquity.com";
-    }
+	public String getAppletInfo() {
+		return "OSNIApplet\n\n"
+				+ "Demonstration applet for the TransverseMercatorProjection\n"
+				+ "and OSNI classes\n\n"
+				+ "Copyright \u00a9 2002 David Harper at Obliquity Consulting\n"
+				+ "www.obliquity.com";
+	}
 }

@@ -27,17 +27,17 @@
 import java.applet.Applet;
 
 public class OSGBReverseApplet extends Applet {
-    public void init() {
-    	ThreeDPanel p = new ThreeDPanel();
-    	p.add(new OSGBReverseForm());
-    	add(p);
-    }
+	public void init() {
+		ThreeDPanel p = new ThreeDPanel();
+		p.add(new OSGBReverseForm());
+		add(p);
+	}
 
-    public String getAppletInfo() {
-    	return "OSGBReverseApplet\n\n" +
-    	    "Demonstration applet for the TransverseMercatorProjection\n" + 
-    	    "and OSGB classes\n\n" +
-    	    "Copyright \u00a9 2004 David Harper at Obliquity Consulting\n" +
-    	    "www.obliquity.com";
-    }
+	public String getAppletInfo() {
+		return "OSGBReverseApplet\n\n"
+				+ "Demonstration applet for the TransverseMercatorProjection\n"
+				+ "and OSGB classes\n\n"
+				+ "Copyright \u00a9 2004 David Harper at Obliquity Consulting\n"
+				+ "www.obliquity.com";
+	}
 }

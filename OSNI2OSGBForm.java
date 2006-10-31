@@ -32,220 +32,218 @@ import java.awt.event.*;
 import com.obliquity.mapping.*;
 
 public class OSNI2OSGBForm extends Panel implements ActionListener {
-    OSNI osni;
-    OSGB osgb;
-    Separator sep;
-    TextField eastings, northings;
-    List prefix;
-    Label osgbPrefix, osgbEastings, osgbNorthings, gridinput;
-    Button calculate;
-    NumberFormat myFormat = NumberFormat.getInstance();
-   
-    public OSNI2OSGBForm() {
-	osni = new OSNI();
-	osgb = new OSGB();
+	OSNI osni;
+	OSGB osgb;
+	Separator sep;
+	TextField eastings, northings;
+	List prefix;
+	Label osgbPrefix, osgbEastings, osgbNorthings, gridinput;
+	Button calculate;
+	NumberFormat myFormat = NumberFormat.getInstance();
 
-	myFormat.setMaximumFractionDigits(2);
-	myFormat.setMinimumFractionDigits(2);
+	public OSNI2OSGBForm() {
+		osni = new OSNI();
+		osgb = new OSGB();
 
-	GridBagLayout gbl = new GridBagLayout();
-	GridBagConstraints gbc = new GridBagConstraints();
+		myFormat.setMaximumFractionDigits(2);
+		myFormat.setMinimumFractionDigits(2);
 
-	setLayout(gbl);
+		GridBagLayout gbl = new GridBagLayout();
+		GridBagConstraints gbc = new GridBagConstraints();
 
-	Label label = new Label("OSNI to OSGB");
+		setLayout(gbl);
 
-	label.setFont(new Font("SansSerif", Font.BOLD + Font.ITALIC, 18));
-	label.setForeground(Color.blue);
+		Label label = new Label("OSNI to OSGB");
 
-	gbc.anchor = GridBagConstraints.NORTH;
-	gbc.gridwidth = GridBagConstraints.REMAINDER;
-	add(label, gbc);
+		label.setFont(new Font("SansSerif", Font.BOLD + Font.ITALIC, 18));
+		label.setForeground(Color.blue);
 
-	sep = new Separator();
-	gbc.fill      = GridBagConstraints.HORIZONTAL;
-        gbc.insets    = new Insets(5,0,5,0);
-        add(sep, gbc);
+		gbc.anchor = GridBagConstraints.NORTH;
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		add(label, gbc);
 
-	label = new Label("Eastings (metres):");
-        gbc.gridwidth = 1;
-        gbc.insets = new Insets(0,0,0,0);
-        add(label, gbc);
+		sep = new Separator();
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.insets = new Insets(5, 0, 5, 0);
+		add(sep, gbc);
 
-	eastings = new TextField(10);
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        add(eastings, gbc);
+		label = new Label("Eastings (metres):");
+		gbc.gridwidth = 1;
+		gbc.insets = new Insets(0, 0, 0, 0);
+		add(label, gbc);
 
-	label = new Label("Northings (metres):");
-	gbc.gridwidth = 1;
-        gbc.insets = new Insets(0,0,0,0);
-        add(label, gbc);
+		eastings = new TextField(10);
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		add(eastings, gbc);
 
-	northings = new TextField(10);
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        add(northings, gbc);
+		label = new Label("Northings (metres):");
+		gbc.gridwidth = 1;
+		gbc.insets = new Insets(0, 0, 0, 0);
+		add(label, gbc);
 
-	label = new Label("Grid prefix:");
-	gbc.gridwidth = 1;
-        gbc.insets = new Insets(0,0,0,0);
-        add(label, gbc);
+		northings = new TextField(10);
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		add(northings, gbc);
 
-	prefix = new List(5);
-	populatePrefixes(prefix);
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        add(prefix, gbc);
+		label = new Label("Grid prefix:");
+		gbc.gridwidth = 1;
+		gbc.insets = new Insets(0, 0, 0, 0);
+		add(label, gbc);
 
-	sep = new Separator();
-	gbc.fill      = GridBagConstraints.HORIZONTAL;
-        gbc.insets    = new Insets(5,0,5,0);
-        add(sep, gbc);
+		prefix = new List(5);
+		populatePrefixes(prefix);
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		add(prefix, gbc);
 
-	Panel buttonpanel = new Panel();
-	buttonpanel.setLayout(new BorderLayout());
-	calculate = new Button("Convert");
-	buttonpanel.add(calculate, BorderLayout.CENTER);
+		sep = new Separator();
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.insets = new Insets(5, 0, 5, 0);
+		add(sep, gbc);
 
-	calculate.addActionListener(this);
+		Panel buttonpanel = new Panel();
+		buttonpanel.setLayout(new BorderLayout());
+		calculate = new Button("Convert");
+		buttonpanel.add(calculate, BorderLayout.CENTER);
 
-	gbc.insets = new Insets(0,0,0,0);
-	add(buttonpanel, gbc);
+		calculate.addActionListener(this);
 
-	sep = new Separator();
-	gbc.fill      = GridBagConstraints.HORIZONTAL;
-        gbc.insets    = new Insets(5,0,5,0);
-        add(sep, gbc);
+		gbc.insets = new Insets(0, 0, 0, 0);
+		add(buttonpanel, gbc);
 
-	gridinput = new Label();
-	gridinput.setForeground(Color.red);
-        gbc.insets = new Insets(0,0,5,0);
-	add(gridinput, gbc);
+		sep = new Separator();
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.insets = new Insets(5, 0, 5, 0);
+		add(sep, gbc);
 
-	label = new Label("Prefix:");
-	label.setForeground(Color.blue);
-        gbc.insets = new Insets(0,0,0,0);
-	gbc.gridwidth = 1;
-        add(label, gbc);
+		gridinput = new Label();
+		gridinput.setForeground(Color.red);
+		gbc.insets = new Insets(0, 0, 5, 0);
+		add(gridinput, gbc);
 
-	osgbPrefix = new Label();
-	osgbPrefix.setForeground(Color.blue);
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        add(osgbPrefix, gbc);
+		label = new Label("Prefix:");
+		label.setForeground(Color.blue);
+		gbc.insets = new Insets(0, 0, 0, 0);
+		gbc.gridwidth = 1;
+		add(label, gbc);
 
-	label = new Label("Eastings:");
-	label.setForeground(Color.blue);
-        gbc.insets = new Insets(0,0,0,0);
-	gbc.gridwidth = 1;
-        add(label, gbc);
+		osgbPrefix = new Label();
+		osgbPrefix.setForeground(Color.blue);
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		add(osgbPrefix, gbc);
 
-	osgbEastings = new Label();
-	osgbEastings.setForeground(Color.blue);
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        add(osgbEastings, gbc);
+		label = new Label("Eastings:");
+		label.setForeground(Color.blue);
+		gbc.insets = new Insets(0, 0, 0, 0);
+		gbc.gridwidth = 1;
+		add(label, gbc);
 
-	label = new Label("Northings:");
-	label.setForeground(Color.blue);
-	gbc.gridwidth = 1;
-        gbc.insets = new Insets(0,0,0,0);
-        add(label, gbc);
+		osgbEastings = new Label();
+		osgbEastings.setForeground(Color.blue);
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		add(osgbEastings, gbc);
 
-	osgbNorthings = new Label();
-	osgbNorthings.setForeground(Color.blue);
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        add(osgbNorthings, gbc);
+		label = new Label("Northings:");
+		label.setForeground(Color.blue);
+		gbc.gridwidth = 1;
+		gbc.insets = new Insets(0, 0, 0, 0);
+		add(label, gbc);
 
-	sep = new Separator();
-	gbc.fill      = GridBagConstraints.HORIZONTAL;
-        gbc.insets    = new Insets(5,0,2,0);
-        add(sep, gbc);
+		osgbNorthings = new Label();
+		osgbNorthings.setForeground(Color.blue);
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		add(osgbNorthings, gbc);
 
-	Label obliquitylabel = new Label("Copyright \u00a9 2002 by Obliquity.com");
+		sep = new Separator();
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.insets = new Insets(5, 0, 2, 0);
+		add(sep, gbc);
 
-	obliquitylabel.setFont(new Font("SansSerif", Font.ITALIC, 12));
-	obliquitylabel.setForeground(Color.blue);
+		Label obliquitylabel = new Label(
+				"Copyright \u00a9 2002 by Obliquity.com");
 
-	gbc.anchor = GridBagConstraints.NORTH;
-	gbc.gridwidth = GridBagConstraints.REMAINDER;
-	add(obliquitylabel, gbc);
-    }
+		obliquitylabel.setFont(new Font("SansSerif", Font.ITALIC, 12));
+		obliquitylabel.setForeground(Color.blue);
 
-    private void populatePrefixes(List list) {
-	String [] prefixes = {
-	    "B", "C", "D", "G", "H", "J"
-	    //"A", "B", "C", "D", "E",
-	    //"F", "G", "H", "J", "K",
-	    //"L", "M", "N", "O", "P",
-	    //"Q", "R", "S", "T", "U",
-	    //"V", "W", "X", "Y", "Z"
-	};
-
-	for (int j = 0; j < prefixes.length; j++)
-	    list.add(prefixes[j]);
-
-	list.select(0);
-    }
-
-    public void actionPerformed(ActionEvent ae) {
-	double x = 0.0, y = 0.0;
-	Double d;
-
-	try {
-	    d = new Double(eastings.getText());
-	    x = d.doubleValue();
-	}
-	catch (NumberFormatException nfe) {
-	    eastings.setText("0");
-	    x = 0.0;
+		gbc.anchor = GridBagConstraints.NORTH;
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		add(obliquitylabel, gbc);
 	}
 
-	try {
-	    d = new Double(northings.getText());
-	    y = d.doubleValue();
-	}
-	catch (NumberFormatException nfe) {
-	    northings.setText("0");
-	    y = 0.0;
-	}
+	private void populatePrefixes(List list) {
+		String[] prefixes = { "B", "C", "D", "G", "H", "J"
+		// "A", "B", "C", "D", "E",
+		// "F", "G", "H", "J", "K",
+		// "L", "M", "N", "O", "P",
+		// "Q", "R", "S", "T", "U",
+		// "V", "W", "X", "Y", "Z"
+		};
 
-	DPoint p0 = new DPoint(x, y);
+		for (int j = 0; j < prefixes.length; j++)
+			list.add(prefixes[j]);
 
-	String pfxs = prefix.getSelectedItem();
-
-	DPoint dp = osni.GridSquareToOffset(pfxs.charAt(0));
-	dp.offsetBy(p0);
-
-	DPoint p = osni.GridToLongitudeAndLatitude(dp);
-
-	DPoint osgbPoint = osgb.LatitudeAndLongitudeToGrid(p);
-
-	String str;
-
-	if (osgbPoint.getX() >= 0.0 && osgbPoint.getY() >= 0.0) {
-	    str = new String(osgb.GridToGridSquare(osgbPoint));
-	    osgbPrefix.setForeground(Color.blue);
-	    osgbPrefix.setText(str);
-	} else {
-	    osgbPrefix.setForeground(Color.red);
-	    osgbPrefix.setText("NO GRID SQUARE");
+		list.select(0);
 	}
 
-	double osgbX = osgbPoint.getX()%100000.0;
-	if (osgbX < 0.0)
-	    osgbX += 100000.0;
+	public void actionPerformed(ActionEvent ae) {
+		double x = 0.0, y = 0.0;
+		Double d;
 
-	str = myFormat.format(osgbX);
+		try {
+			d = new Double(eastings.getText());
+			x = d.doubleValue();
+		} catch (NumberFormatException nfe) {
+			eastings.setText("0");
+			x = 0.0;
+		}
 
-	osgbEastings.setText(str);
+		try {
+			d = new Double(northings.getText());
+			y = d.doubleValue();
+		} catch (NumberFormatException nfe) {
+			northings.setText("0");
+			y = 0.0;
+		}
 
-	double osgbY = osgbPoint.getY()%100000.0;
-	if (osgbY < 0.0)
-	    osgbY += 100000.0;
+		DPoint p0 = new DPoint(x, y);
 
-	str = myFormat.format(osgbY);
+		String pfxs = prefix.getSelectedItem();
 
-	osgbNorthings.setText(str);
+		DPoint dp = osni.GridSquareToOffset(pfxs.charAt(0));
+		dp.offsetBy(p0);
 
-	str = pfxs + " " + myFormat.format(p0.getX()) + " " + myFormat.format(p0.getY());
-	gridinput.setText(str);
-    }
+		DPoint p = osni.GridToLongitudeAndLatitude(dp);
+
+		DPoint osgbPoint = osgb.LatitudeAndLongitudeToGrid(p);
+
+		String str;
+
+		if (osgbPoint.getX() >= 0.0 && osgbPoint.getY() >= 0.0) {
+			str = new String(osgb.GridToGridSquare(osgbPoint));
+			osgbPrefix.setForeground(Color.blue);
+			osgbPrefix.setText(str);
+		} else {
+			osgbPrefix.setForeground(Color.red);
+			osgbPrefix.setText("NO GRID SQUARE");
+		}
+
+		double osgbX = osgbPoint.getX() % 100000.0;
+		if (osgbX < 0.0)
+			osgbX += 100000.0;
+
+		str = myFormat.format(osgbX);
+
+		osgbEastings.setText(str);
+
+		double osgbY = osgbPoint.getY() % 100000.0;
+		if (osgbY < 0.0)
+			osgbY += 100000.0;
+
+		str = myFormat.format(osgbY);
+
+		osgbNorthings.setText(str);
+
+		str = pfxs + " " + myFormat.format(p0.getX()) + " "
+				+ myFormat.format(p0.getY());
+		gridinput.setText(str);
+	}
 }
-
