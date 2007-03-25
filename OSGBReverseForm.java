@@ -26,20 +26,23 @@
 
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.*;
 import java.text.*;
 
 import com.obliquity.mapping.*;
 
-public class OSGBReverseForm extends Panel implements ActionListener {
+public class OSGBReverseForm extends JPanel implements ActionListener {
 	OSGB osgb;
-	Separator sep;
-	TextField latd, latm, lats, lngd, lngm, lngs;
-	Checkbox east;
-	Label prefix, eastings, northings;
-	Button calculate;
+	JSeparator sep;
+	JTextField latd, latm, lats, lngd, lngm, lngs;
+	JCheckBox east;
+	JLabel prefix, eastings, northings;
+	JButton calculate;
 	NumberFormat myFormat = NumberFormat.getInstance();
 
 	public OSGBReverseForm() {
+		super();
+		
 		osgb = new OSGB();
 
 		myFormat.setMaximumFractionDigits(0);
@@ -50,7 +53,7 @@ public class OSGBReverseForm extends Panel implements ActionListener {
 
 		setLayout(gbl);
 
-		Label label = new Label("Latitude/Longitude to OSGB");
+		JLabel label = new JLabel("Latitude/Longitude to OSGB");
 
 		label.setFont(new Font("SansSerif", Font.BOLD + Font.ITALIC, 18));
 		label.setForeground(Color.blue);
@@ -59,34 +62,36 @@ public class OSGBReverseForm extends Panel implements ActionListener {
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		add(label, gbc);
 
-		sep = new Separator();
+		sep = new JSeparator();
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.insets = new Insets(5, 0, 5, 0);
 		add(sep, gbc);
 
-		label = new Label("Longitude:");
+		label = new JLabel("Longitude:");
 		gbc.gridwidth = 1;
 		gbc.insets = new Insets(0, 0, 0, 0);
 		add(label, gbc);
 
-		lngd = new TextField(2);
+		lngd = new JTextField(2);
 		add(lngd, gbc);
 
 		add(new Label("d"), gbc);
 
-		lngm = new TextField(2);
+		lngm = new JTextField(2);
 		add(lngm, gbc);
 
 		add(new Label("m"), gbc);
 
-		lngs = new TextField(5);
+		lngs = new JTextField(5);
 		add(lngs, gbc);
 
 		add(new Label("s"), gbc);
 
-		CheckboxGroup cbg = new CheckboxGroup();
-		east = new Checkbox("East", cbg, true);
-		Checkbox west = new Checkbox("West", cbg, false);
+		ButtonGroup cbg = new ButtonGroup();
+		east = new JCheckBox("East", true);
+		JCheckBox west = new JCheckBox("West", false);
+		cbg.add(east);
+		cbg.add(west);
 
 		add(east, gbc);
 
@@ -94,36 +99,36 @@ public class OSGBReverseForm extends Panel implements ActionListener {
 
 		add(west, gbc);
 
-		label = new Label("Latitude:");
+		label = new JLabel("Latitude:");
 		gbc.gridwidth = 1;
 		gbc.insets = new Insets(0, 0, 0, 0);
 		add(label, gbc);
 
-		latd = new TextField(2);
+		latd = new JTextField(2);
 		add(latd, gbc);
 
 		add(new Label("d"), gbc);
 
-		latm = new TextField(2);
+		latm = new JTextField(2);
 		add(latm, gbc);
 
 		add(new Label("m"), gbc);
 
-		lats = new TextField(5);
+		lats = new JTextField(5);
 		add(lats, gbc);
 
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
 
 		add(new Label("s"), gbc);
 
-		sep = new Separator();
+		sep = new JSeparator();
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.insets = new Insets(5, 0, 5, 0);
 		add(sep, gbc);
 
 		Panel buttonpanel = new Panel();
 		buttonpanel.setLayout(new BorderLayout());
-		calculate = new Button("Convert");
+		calculate = new JButton("Convert");
 		buttonpanel.add(calculate, BorderLayout.CENTER);
 
 		calculate.addActionListener(this);
@@ -131,45 +136,45 @@ public class OSGBReverseForm extends Panel implements ActionListener {
 		gbc.insets = new Insets(0, 0, 0, 0);
 		add(buttonpanel, gbc);
 
-		sep = new Separator();
+		sep = new JSeparator();
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.insets = new Insets(5, 0, 5, 0);
 		add(sep, gbc);
 
-		label = new Label("Prefix:");
+		label = new JLabel("Prefix:");
 		label.setForeground(Color.blue);
 		gbc.insets = new Insets(0, 0, 0, 0);
 		gbc.gridwidth = 1;
 		add(label, gbc);
 
-		prefix = new Label();
+		prefix = new JLabel();
 		prefix.setForeground(Color.blue);
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		add(prefix, gbc);
 
-		label = new Label("Eastings:");
+		label = new JLabel("Eastings:");
 		label.setForeground(Color.blue);
 		gbc.insets = new Insets(0, 0, 0, 0);
 		gbc.gridwidth = 1;
 		add(label, gbc);
 
-		eastings = new Label();
+		eastings = new JLabel();
 		eastings.setForeground(Color.blue);
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		add(eastings, gbc);
 
-		label = new Label("Northings:");
+		label = new JLabel("Northings:");
 		label.setForeground(Color.blue);
 		gbc.gridwidth = 1;
 		gbc.insets = new Insets(0, 0, 0, 0);
 		add(label, gbc);
 
-		northings = new Label();
+		northings = new JLabel();
 		northings.setForeground(Color.blue);
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		add(northings, gbc);
 
-		sep = new Separator();
+		sep = new JSeparator();
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.insets = new Insets(5, 0, 2, 0);
 		add(sep, gbc);
@@ -190,7 +195,7 @@ public class OSGBReverseForm extends Panel implements ActionListener {
 
 		x = parseAngleFields(lngd, lngm, lngs) * Math.PI / 180.0;
 
-		if (!east.getState())
+		if (!east.isSelected())
 			x = -x;
 
 		y = parseAngleFields(latd, latm, lats) * Math.PI / 180.0;
@@ -206,8 +211,8 @@ public class OSGBReverseForm extends Panel implements ActionListener {
 		northings.setText(myFormat.format(p.getY() % 100000.0));
 	}
 
-	private double parseAngleFields(TextField degrees, TextField minutes,
-			TextField seconds) {
+	private double parseAngleFields(JTextField degrees, JTextField minutes,
+			JTextField seconds) {
 		double d, m, s;
 
 		try {
@@ -229,5 +234,17 @@ public class OSGBReverseForm extends Panel implements ActionListener {
 		}
 
 		return d + m / 60.0 + s / 3600.0;
+	}
+	
+	public static void main(String[] args) {
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				JFrame frame = new JFrame("Lat/long to OSGB");
+				frame.getContentPane().add(new OSGBReverseForm());
+				frame.pack();
+				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				frame.setVisible(true);
+			}
+		});
 	}
 }

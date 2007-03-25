@@ -29,19 +29,22 @@ import java.text.*;
 
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.*;
 
 import com.obliquity.mapping.*;
 
-public class OSGBForm extends Panel implements ActionListener {
+public class OSGBForm extends JPanel implements ActionListener {
 	OSGB osgb;
-	Separator sep;
-	TextField eastings, northings;
-	List prefix;
-	Label longitude, latitude, gridinput;
-	Button calculate;
+	JSeparator sep;
+	JTextField eastings, northings;
+	JList prefix;
+	JLabel longitude, latitude, gridinput;
+	JButton calculate;
 	NumberFormat myFormat = NumberFormat.getInstance();
 
 	public OSGBForm() {
+		super();
+		
 		osgb = new OSGB();
 
 		myFormat.setMaximumFractionDigits(2);
@@ -52,7 +55,7 @@ public class OSGBForm extends Panel implements ActionListener {
 
 		setLayout(gbl);
 
-		Label label = new Label("OSGB to Latitude/Longitude");
+		JLabel label = new JLabel("OSGB to Latitude/Longitude");
 
 		label.setFont(new Font("SansSerif", Font.BOLD + Font.ITALIC, 18));
 		label.setForeground(Color.blue);
@@ -61,47 +64,47 @@ public class OSGBForm extends Panel implements ActionListener {
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		add(label, gbc);
 
-		sep = new Separator();
+		sep = new JSeparator();
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.insets = new Insets(5, 0, 5, 0);
 		add(sep, gbc);
 
-		label = new Label("Eastings (metres):");
+		label = new JLabel("Eastings (metres):");
 		gbc.gridwidth = 1;
 		gbc.insets = new Insets(0, 0, 0, 0);
 		add(label, gbc);
 
-		eastings = new TextField(10);
+		eastings = new JTextField(10);
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		add(eastings, gbc);
 
-		label = new Label("Northings (metres):");
+		label = new JLabel("Northings (metres):");
 		gbc.gridwidth = 1;
 		gbc.insets = new Insets(0, 0, 0, 0);
 		add(label, gbc);
 
-		northings = new TextField(10);
+		northings = new JTextField(10);
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		add(northings, gbc);
 
-		label = new Label("Grid prefix:");
+		label = new JLabel("Grid prefix:");
 		gbc.gridwidth = 1;
 		gbc.insets = new Insets(0, 0, 0, 0);
 		add(label, gbc);
 
-		prefix = new List(5);
-		populatePrefixes(prefix);
+		prefix = prefixList();
+		prefix.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
-		add(prefix, gbc);
+		add(new JScrollPane(prefix), gbc);
 
-		sep = new Separator();
+		sep = new JSeparator();
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.insets = new Insets(5, 0, 5, 0);
 		add(sep, gbc);
 
 		Panel buttonpanel = new Panel();
 		buttonpanel.setLayout(new BorderLayout());
-		calculate = new Button("Convert");
+		calculate = new JButton("Convert");
 		buttonpanel.add(calculate, BorderLayout.CENTER);
 
 		calculate.addActionListener(this);
@@ -109,39 +112,39 @@ public class OSGBForm extends Panel implements ActionListener {
 		gbc.insets = new Insets(0, 0, 0, 0);
 		add(buttonpanel, gbc);
 
-		sep = new Separator();
+		sep = new JSeparator();
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.insets = new Insets(5, 0, 5, 0);
 		add(sep, gbc);
 
-		gridinput = new Label();
+		gridinput = new JLabel("        ");
 		gridinput.setForeground(Color.red);
 		gbc.insets = new Insets(0, 0, 5, 0);
 		add(gridinput, gbc);
 
-		label = new Label("Latitude:");
+		label = new JLabel("Latitude:");
 		label.setForeground(Color.blue);
 		gbc.insets = new Insets(0, 0, 0, 0);
 		gbc.gridwidth = 1;
 		add(label, gbc);
 
-		longitude = new Label();
+		longitude = new JLabel();
 		longitude.setForeground(Color.blue);
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		add(longitude, gbc);
 
-		label = new Label("Longitude:");
+		label = new JLabel("Longitude:");
 		label.setForeground(Color.blue);
 		gbc.gridwidth = 1;
 		gbc.insets = new Insets(0, 0, 0, 0);
 		add(label, gbc);
 
-		latitude = new Label();
+		latitude = new JLabel();
 		latitude.setForeground(Color.blue);
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		add(latitude, gbc);
 
-		sep = new Separator();
+		sep = new JSeparator();
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.insets = new Insets(5, 0, 2, 0);
 		add(sep, gbc);
@@ -155,9 +158,14 @@ public class OSGBForm extends Panel implements ActionListener {
 		gbc.anchor = GridBagConstraints.NORTH;
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		add(obliquitylabel, gbc);
+		
+		Dimension d = getPreferredSize();
+		d.width += 40;
+		d.height += 40;
+		setPreferredSize(d);
 	}
 
-	private void populatePrefixes(List list) {
+	private JList prefixList() {
 		String[] prefixes = { "HP", "HT", "HU", "HY", "HZ", "NA", "NB", "NC",
 				"ND", "NF", "NG", "NH", "NJ", "NK", "NL", "NM", "NN", "NO",
 				"NR", "NS", "NT", "NU", "NV", "NW", "NX", "NY", "NZ", "SA",
@@ -165,10 +173,13 @@ public class OSGBForm extends Panel implements ActionListener {
 				"SP", "SR", "SS", "ST", "SU", "SV", "SW", "SX", "SY", "SZ",
 				"TA", "TF", "TG", "TL", "TM", "TQ", "TR", "TV" };
 
-		for (int j = 0; j < prefixes.length; j++)
-			list.add(prefixes[j]);
-
-		list.select(0);
+		JList list = new JList(prefixes);
+		
+		list.setVisibleRowCount(5);
+		
+		list.setSelectedIndex(0);
+		
+		return list;
 	}
 
 	public void actionPerformed(ActionEvent ae) {
@@ -193,7 +204,7 @@ public class OSGBForm extends Panel implements ActionListener {
 
 		DPoint p0 = new DPoint(x, y);
 
-		String pfxs = prefix.getSelectedItem();
+		String pfxs = (String)prefix.getSelectedValue();
 
 		DPoint dp = osgb.GridSquareToOffset(pfxs.charAt(0), pfxs.charAt(1));
 		dp.offsetBy(p0);
@@ -233,5 +244,17 @@ public class OSGBForm extends Panel implements ActionListener {
 		str = pfxs + " " + myFormat.format(p0.getX()) + " "
 				+ myFormat.format(p0.getY());
 		gridinput.setText(str);
+	}
+	
+	public static void main(String[] args) {
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				JFrame frame = new JFrame("OSGB to lat/long");
+				frame.getContentPane().add(new OSGBForm());
+				frame.pack();
+				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				frame.setVisible(true);
+			}
+		});
 	}
 }

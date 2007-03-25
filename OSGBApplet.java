@@ -24,13 +24,11 @@
  * the archive of this library for complete text of license.
  */
 
-import java.applet.Applet;
+import javax.swing.JApplet;
 
-public class OSGBApplet extends Applet {
+public class OSGBApplet extends JApplet {
 	public void init() {
-		ThreeDPanel p = new ThreeDPanel();
-		p.add(new OSGBForm());
-		add(p);
+		getContentPane().add(new OSGBForm());
 	}
 
 	public String getAppletInfo() {

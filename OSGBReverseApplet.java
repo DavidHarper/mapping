@@ -24,13 +24,11 @@
  * the archive of this library for complete text of license.
  */
 
-import java.applet.Applet;
+import javax.swing.JApplet;
 
-public class OSGBReverseApplet extends Applet {
+public class OSGBReverseApplet extends JApplet {
 	public void init() {
-		ThreeDPanel p = new ThreeDPanel();
-		p.add(new OSGBReverseForm());
-		add(p);
+		getContentPane().add(new OSGBReverseForm());
 	}
 
 	public String getAppletInfo() {
