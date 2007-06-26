@@ -7,5 +7,5 @@ jar cvfm mapping.jar Manifest.mf \
                     OSNIApplet.class OSNIForm.class \
                     Separator.class \
                     ThreeDPanel.class \
-		    test/*.class
+		    test/*.class \
                     com/obliquity/mapping/*.class
