@@ -250,7 +250,7 @@ public class EllipsoidalArc {
 		su1 = Math.sin(Math.atan(tu1));
 
 		ca1 = Math.cos(azimuthA);
-		sa1 = Math.sin(azimuthB);
+		sa1 = Math.sin(azimuthA);
 
 		tsig1 = tu1 / ca1;
 		sa = cu1 * sa1;
