@@ -35,6 +35,8 @@ import com.obliquity.mapping.*;
 public class TestEllipsoid {
 	static NumberFormat angleFormat = NumberFormat.getInstance();
 	static NumberFormat distanceFormat = NumberFormat.getInstance();
+	
+	private static final double TWO_PI = 2.0 * Math.PI;
 
 	static public double DtoR(double d) {
 		return d * Math.PI / 180.0;
@@ -140,7 +142,12 @@ public class TestEllipsoid {
 				System.out.print(", ");
 				printAngle(arc.getLatitudeB(), System.out, "North ", "South ");
 				System.out.print(" (azimuth = ");
-				printAngle(arc.getAzimuthB(), System.out, null, null);
+				
+				double azimuth = arc.getAzimuthB() + Math.PI;
+				if (azimuth > TWO_PI)
+					azimuth -= TWO_PI;
+				
+				printAngle(azimuth, System.out, null, null);
 				System.out.println(")");
 			}
 		} catch (IllegalArgumentException iae) {
